@@ -1,0 +1,19 @@
+/* components/SectionTitle.css */
+.section-title {
+  min-height: 100vh;
+  background: var(--color-purple);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.section-title-text {
+  color: var(--color-coral);
+  margin: 0 0 20px;
+}
+
+.section-title-hint {
+  color: var(--color-lilac);
+}
