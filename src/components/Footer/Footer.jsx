@@ -6,7 +6,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="footer" id="contact">
+    <footer className="footer scroll-stage" id="contact">
       <svg
         className="footer-wave-top"
         viewBox="0 0 1440 100"

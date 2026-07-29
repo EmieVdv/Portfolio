@@ -8,10 +8,6 @@
   position: relative;
 }
 
-.project-preview + .project-preview {
-  margin-top: 8rem;
-}
-
 .project-preview-index {
   position: absolute;
   top: 8rem;

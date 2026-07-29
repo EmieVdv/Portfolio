@@ -3,7 +3,7 @@ import './ProjectPreview.css';
 
 export default function ProjectPreview({ index, title, category, images, slug }) {
   return (
-    <section className="project-preview">
+    <section className="project-preview scroll-stage">
       <span className="project-preview-index text-h3">{index}</span>
 
       <div className="project-preview-collage">

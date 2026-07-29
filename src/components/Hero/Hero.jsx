@@ -2,7 +2,7 @@ import './Hero.css';
 
 export default function Hero() {
   return (
-    <section className="hero">
+    <section className="hero scroll-stage">
       <p className="hero-eyebrow text-h3">Portfolio - Emie Van de Veire</p>
 
       <div className="hero-title-container">
