@@ -1,4 +1,3 @@
-// components/Hero.jsx
 import './Hero.css';
 
 export default function Hero() {

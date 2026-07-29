@@ -1,23 +1,25 @@
-/* components/Hero.css */
 .hero {
   position: relative;
   min-height: 100vh;
   background: var(--color-cream);
   color: var(--color-ink);
-  padding: 10rem 4rem 0;
+  padding: 8rem 4rem;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .hero-eyebrow {
   color: var(--color-coral);
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 }
 
 .hero-title-container {
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  margin-bottom: 3rem;
+  margin-bottom: 4rem;
 }
 
 .hero-title {
@@ -32,8 +34,9 @@
 }
 
 .hero-subtitle-image {
-  width: min(100%, 809px);
+  width: clamp(280px, 45vw, 760px);
   height: auto;
+  display: block;
   margin: 0 0 ;
 }
 

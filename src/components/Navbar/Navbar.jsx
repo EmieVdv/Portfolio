@@ -20,7 +20,6 @@ export default function Navbar() {
 
       <ul className="navbar-links">
         <li><a className="text-nav" href="#projects">Projects</a></li>
-        <li><a className="text-nav" href="#about">About</a></li>
         <li><a className="text-nav" href="#contact">Contact</a></li>
       </ul>
     </nav>
