@@ -26,6 +26,13 @@
 */
 html {
   height: 100%;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar {
+  width: 0;
+  height: 0;
 }
 
 /*
@@ -38,6 +45,25 @@ body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   background: var(--color-purple);
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+body::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+html.lenis,
+html.lenis body {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html.lenis::-webkit-scrollbar,
+html.lenis body::-webkit-scrollbar {
+  width: 0;
+  height: 0;
 }
 
 /*

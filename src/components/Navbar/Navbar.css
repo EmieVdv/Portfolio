@@ -10,6 +10,11 @@
   padding: 3rem 4rem;
   background: transparent;
   color: var(--color-ink);
+  transition: color 0.25s ease;
+}
+
+.navbar--cream {
+  color: var(--color-cream);
 }
 
 .navbar-cv {
@@ -18,6 +23,11 @@
   display: flex;
   gap: 0.5rem;
   align-items: center;
+}
+
+.navbar-cv:hover {
+  color: var(--color-coral);
+  transition: color 0.25s ease;
 }
 
 .navbar-links {
@@ -29,4 +39,9 @@
 .navbar-links a {
   color: inherit;
   text-decoration: none;
+}
+
+.navbar-links a:hover {
+  color: var(--color-coral);
+  transition: color 0.25s ease;
 }

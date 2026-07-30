@@ -1,8 +1,40 @@
+import { useEffect, useState } from 'react';
 import './Navbar.css';
 
 export default function Navbar() {
+  const [isDarkBackground, setIsDarkBackground] = useState(false);
+
+  useEffect(() => {
+    const getSections = () => Array.from(document.querySelectorAll('.scroll-stage'));
+
+    function updateNavbarTheme() {
+      const sections = getSections();
+      if (sections.length === 0) return;
+
+      const currentScroll = window.scrollY;
+      let currentIndex = 0;
+
+      for (let index = 0; index < sections.length; index += 1) {
+        if (sections[index].offsetTop <= currentScroll + 2) {
+          currentIndex = index;
+        }
+      }
+
+      setIsDarkBackground(currentIndex > 0);
+    }
+
+    updateNavbarTheme();
+    window.addEventListener('scroll', updateNavbarTheme, { passive: true });
+    window.addEventListener('resize', updateNavbarTheme);
+
+    return () => {
+      window.removeEventListener('scroll', updateNavbarTheme);
+      window.removeEventListener('resize', updateNavbarTheme);
+    };
+  }, []);
+
   return (
-    <nav className="navbar">
+    <nav className={`navbar ${isDarkBackground ? 'navbar--cream' : ''}`}>
       <div className="navbar-logo text-nav">Emie Van de Veire</div>
 
       <a className="navbar-cv text-nav" href="/cv-emie-van-de-veire.pdf" download>

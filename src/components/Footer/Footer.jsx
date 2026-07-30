@@ -1,20 +1,126 @@
+import { useEffect, useRef } from 'react';
 import "./Footer.css";
 
+function randomPeaks(count) {
+  return Array.from({ length: count }, () => ({
+    xRatio: 0.12 + Math.random() * 0.76,
+    amplitude: 0.35 + Math.random() * 0.45,
+    sigma: 0.08 + Math.random() * 0.06,
+  }));
+}
+
+function waveOffsetAt(x, width, peaks, baseAmplitude) {
+  return peaks.reduce((sum, peak) => {
+    const peakX = peak.xRatio * width;
+    const sigma = peak.sigma * width;
+    return sum + baseAmplitude * peak.amplitude * Math.exp(-((x - peakX) ** 2) / (2 * sigma * sigma));
+  }, 0);
+}
+
+function buildWavePath({ peaks, width, height, baseline, amplitude, minCover = 8 }) {
+  const margin = width * 0.05;
+  const steps = 72;
+  let d = `M${-margin},${height} L${-margin},${baseline}`;
+
+  for (let i = 0; i <= steps; i += 1) {
+    const x = -margin + (i / steps) * (width + margin * 2);
+    const offset = waveOffsetAt(x, width, peaks, amplitude);
+    const y = Math.min(baseline + offset, height - minCover);
+    d += ` L${x.toFixed(1)},${y.toFixed(1)}`;
+  }
+
+  d += ` L${width + margin},${height} Z`;
+  return d;
+}
+
 export default function Footer() {
+  const footerRef = useRef(null);
+  const bottomWaveSvgRef = useRef(null);
+  const bottomWavePathRef = useRef(null);
+  const basePeaks = useRef(randomPeaks(3));
+  const hoverPeak = useRef({ xRatio: 0.5, amplitude: 0, sigma: 0.16 });
+  const targetHoverX = useRef(0.5);
+  const targetHoverAmp = useRef(0);
+  const rafId = useRef(null);
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  useEffect(() => {
+    function animate() {
+      hoverPeak.current.xRatio += (targetHoverX.current - hoverPeak.current.xRatio) * 0.08;
+      hoverPeak.current.amplitude += (targetHoverAmp.current - hoverPeak.current.amplitude) * 0.08;
+
+      const footerEl = footerRef.current;
+      const svgEl = bottomWaveSvgRef.current;
+      const pathEl = bottomWavePathRef.current;
+
+      if (footerEl && svgEl && pathEl) {
+        const footerRect = footerEl.getBoundingClientRect();
+        const svgRect = svgEl.getBoundingClientRect();
+        const viewBoxWidth = 1440;
+        const viewBoxHeight = 100;
+        const scaleX = viewBoxWidth / svgRect.width;
+        const scaleY = viewBoxHeight / svgRect.height;
+        const allPeaks = [...basePeaks.current, hoverPeak.current];
+
+        pathEl.setAttribute(
+          'd',
+          buildWavePath({
+            peaks: allPeaks,
+            width: footerRect.width * scaleX,
+            height: footerRect.height * scaleY,
+            baseline: 42,
+            amplitude: 50,
+            minCover: 10,
+          })
+        );
+      }
+
+      rafId.current = requestAnimationFrame(animate);
+    }
+
+    rafId.current = requestAnimationFrame(animate);
+
+    return () => cancelAnimationFrame(rafId.current);
+  }, []);
+
+  function handlePointerMove(event) {
+    const footerEl = footerRef.current;
+    if (!footerEl) return;
+
+    const footerRect = footerEl.getBoundingClientRect();
+    const xRatio = (event.clientX - footerRect.left) / footerRect.width;
+    const yRatio = (event.clientY - footerRect.top) / footerRect.height;
+    const clampedX = Math.min(1, Math.max(0, xRatio));
+    const proximityToBottom = Math.min(1, Math.max(0, yRatio));
+
+    targetHoverX.current = clampedX;
+    targetHoverAmp.current = 0.18 + proximityToBottom * 0.14;
+  }
+
+  function handlePointerLeave() {
+    targetHoverAmp.current = 0;
+  }
+
   return (
-    <footer className="footer scroll-stage" id="contact">
+    <footer
+      className="footer scroll-stage"
+      id="contact"
+      ref={footerRef}
+      onPointerMove={handlePointerMove}
+      onPointerLeave={handlePointerLeave}
+    >
       <svg
         className="footer-wave-top"
         viewBox="0 0 1440 100"
         preserveAspectRatio="none"
+        aria-hidden="true"
       >
         <path
           d="M0,60 C240,10 480,90 720,50 C960,10 1200,80 1440,40 L1440,0 L0,0 Z"
-          fill="var(--color-purple)"
+          fill="var(--color-ink)"
         />
       </svg>
 
@@ -75,10 +181,13 @@ export default function Footer() {
 
       <svg
         className="footer-wave-bottom"
+        ref={bottomWaveSvgRef}
         viewBox="0 0 1440 100"
         preserveAspectRatio="none"
+        aria-hidden="true"
       >
         <path
+          ref={bottomWavePathRef}
           d="M0,40 C240,90 480,10 720,50 C960,90 1200,20 1440,60 L1440,100 L0,100 Z"
           fill="var(--color-lilac)"
         />
