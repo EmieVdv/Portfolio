@@ -1,4 +1,8 @@
-// data/projects.js
+
+function paragraph(text, image) {
+  return image ? { text, image } : { text };
+}
+
 function createProjectDetail({
   title,
   category,
@@ -16,40 +20,40 @@ function createProjectDetail({
       {
         id: "overview",
         heading: "Overview",
-        paragraphs: [intro],
-        image: media,
+        paragraphs: [paragraph(intro, media[0])],
       },
       {
         id: "research",
         heading: "Research & Development",
-        paragraphs: [research],
+        paragraphs: [paragraph(research)],
       },
       {
         id: "design-process",
         heading: "Design Process",
-        paragraphs: [design],
-        image: media,
+        paragraphs: [paragraph(design, media[1])],
       },
       {
         id: "development",
         heading: "Development",
-        paragraphs: [development],
+        paragraphs: [paragraph(development, media[2])],
       },
       {
         id: "my-role",
         heading: "My role",
-        paragraphs: [role],
+        paragraphs: [paragraph(role)],
       },
       {
         id: "reflection",
         heading: "Reflection",
-        paragraphs: [reflection],
+        paragraphs: [paragraph(reflection)],
       },
       {
         id: "technologies",
         heading: "Technologies",
         paragraphs: [
-          `The final build for ${title} combines visual design with a focused technical stack for the ${category.toLowerCase()} experience.`,
+          paragraph(
+            ``
+          ),
         ],
         techs,
       },
@@ -91,7 +95,11 @@ export const projects = [
       reflection:
         "This project taught me how to bridge digital interfaces with physical computing. I gained hands-on experience designing for real users, collaborating in a team, and integrating hardware and software into a single interactive product. It also strengthened my skills in prototyping, usability testing, and designing experiences that are both educational and engaging.",
       techs: ["Arduino", "IoT", "Python", "Flask", "HTML/CSS/JS", "Raspberry Pi", "Blender", "Laser Cutting", "Figma"],
-      media: "/images/bt-1.jpeg",
+      media: [
+        "/images/bt-3.jpeg", 
+        "/images/bt-5.jpeg",  
+        "/images/bt-1.jpeg",  
+      ],
     }),
   },
   {

@@ -69,7 +69,7 @@ export default function Hero() {
             height: heroRect.height * scaleY,
             baseline: 52,
             amplitude: 50,
-            minCover: 10,
+            minCover: 40,
           })
         );
       }

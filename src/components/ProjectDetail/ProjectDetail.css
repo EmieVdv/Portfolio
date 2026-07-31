@@ -35,16 +35,17 @@
 .project-detail-body {
   display: grid;
   grid-template-columns: 220px 1fr;
-  gap: 60px;
-  padding: 80px 8vw 120px;
+  gap: 50px;
+  padding: 80px 4vw 120px;
   max-width: 1300px;
   margin: 0 auto;
 }
 
 .side-index {
   position: sticky;
-  top: 100px;
+  top: 8rem;
   align-self: start;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -52,7 +53,7 @@
 
 .side-index a {
   font-size: 13px;
-  color: #8a8391;
+  color: var(--color-lilac);
   text-decoration: none;
   padding-left: 14px;
   border-left: 2px solid transparent;
@@ -70,43 +71,48 @@
   gap: 100px;
 }
 
-.block {
+/* --- sectie: koptitel + losse paragraaf-rijen --- */
+.detail-section {
+  max-width: 100%;
+  scroll-margin-top: 8rem;
+}
+
+.section-heading {
+  color: var(--color-coral);
+  margin-bottom: 20px;
+}
+
+/* --- paragraaf-rij: zonder foto = volledige breedte, met foto = naast elkaar --- */
+.paragraph-row {
+  display: block;
+  margin-bottom: 32px;
+}
+
+.paragraph-row:last-child {
+  margin-bottom: 0;
+}
+
+.paragraph-row.has-image {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 56px;
   align-items: center;
 }
 
-.block.reverse {
+.paragraph-row.reverse {
   direction: rtl;
 }
-.block.reverse > * {
+.paragraph-row.reverse > * {
   direction: ltr;
 }
 
-.block.text-only {
-  grid-template-columns: 1fr;
-  max-width: 640px;
-}
-
-.block-text h3 {
-  color: var(--color-coral);
-  margin-bottom: 16px;
-}
-
-.block-text p {
-
+.paragraph-row p {
   color: var(--color-ink);
-  margin-bottom: 14px;
 }
 
-.block-text p:last-child {
-  margin-bottom: 0;
-}
-
-.block-media {
-  width: 100%;
-  height: auto;
+.paragraph-image {
+  width: auto;
+  height: 100%;
   border-radius: 2px;
 }
 

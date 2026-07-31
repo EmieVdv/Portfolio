@@ -14,25 +14,42 @@ const SECTIONS = [
 export default function ProjectDetail({ category = '', title = '', content = [] }) {
   const [activeId, setActiveId] = useState(SECTIONS[0].id);
   const sectionRefs = useRef({});
+  const headingRefs = useRef({});
+
+  const handleIndexClick = (event, sectionId) => {
+    event.preventDefault();
+
+    const section = sectionRefs.current[sectionId];
+    if (!section) return;
+
+    setActiveId(sectionId);
+    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) setActiveId(entry.target.id);
-        });
+        const visibleEntries = entries.filter((entry) => entry.isIntersecting);
+
+        if (visibleEntries.length === 0) return;
+
+        const topEntry = visibleEntries.reduce((current, entry) => {
+          if (!current) return entry;
+          return entry.boundingClientRect.top < current.boundingClientRect.top ? entry : current;
+        }, null);
+
+        if (topEntry) setActiveId(topEntry.target.dataset.sectionId || topEntry.target.id);
       },
-      { rootMargin: '-40% 0px -55% 0px' } // vuurt wanneer een sectie rond het midden van het scherm staat
+      { rootMargin: '-128px 0px -70% 0px', threshold: 0 }
     );
 
-    Object.values(sectionRefs.current).forEach((el) => el && observer.observe(el));
+    Object.values(headingRefs.current).forEach((el) => el && observer.observe(el));
     return () => observer.disconnect();
   }, []);
 
   return (
     <div className="project-detail">
       <header className="project-detail-header">
-
         <p className="text-h3 project-detail-eyebrow">{category}</p>
         <h1 className="project-detail-title text-h2">{title}</h1>
 
@@ -50,6 +67,7 @@ export default function ProjectDetail({ category = '', title = '', content = [] 
             <a
               key={s.id}
               href={`#${s.id}`}
+              onClick={(event) => handleIndexClick(event, s.id)}
               className={s.id === activeId ? 'text-nav active' : 'text-nav'}
             >
               {s.label}
@@ -58,26 +76,39 @@ export default function ProjectDetail({ category = '', title = '', content = [] 
         </div>
 
         <div className="content-col">
-          {content.map((block, i) => (
+          {content.map((section) => (
             <section
-              key={block.id}
-              id={block.id}
-              ref={(el) => (sectionRefs.current[block.id] = el)}
-              className={`block ${block.image ? '' : 'text-only'} ${i % 2 === 1 ? 'reverse' : ''}`}
+              key={section.id}
+              id={section.id}
+              ref={(el) => (sectionRefs.current[section.id] = el)}
+              className="detail-section"
             >
-              <div className="block-text">
-                <h3 className="text-h3">{block.heading}</h3>
-                {block.paragraphs.map((p, j) => <p className="text-paragraph" key={j}>{p}</p>)}
-                {block.techs && (
-                  <div className="tech-list">
-                    {block.techs.map((t) => (
-                      <span className="tech-pill text-nav" key={t}>{t}</span>
-                    ))}
-                  </div>
-                )}
-              </div>
-              {block.image && (
-                <img src={block.image} alt="" className="block-media" />
+              <h3
+                data-section-id={section.id}
+                ref={(el) => (headingRefs.current[section.id] = el)}
+                className="text-h3 section-heading"
+              >
+                {section.heading}
+              </h3>
+
+              {section.paragraphs.map((p, j) => (
+                <div
+                  key={j}
+                  className={`paragraph-row ${p.image ? 'has-image' : ''} ${
+                    j % 2 === 1 ? 'reverse' : ''
+                  }`}
+                >
+                  <p className="text-paragraph">{p.text}</p>
+                  {p.image && <img src={p.image} alt="" className="paragraph-image" />}
+                </div>
+              ))}
+
+              {section.techs && (
+                <div className="tech-list">
+                  {section.techs.map((t) => (
+                    <span className="tech-pill text-nav" key={t}>{t}</span>
+                  ))}
+                </div>
               )}
             </section>
           ))}
