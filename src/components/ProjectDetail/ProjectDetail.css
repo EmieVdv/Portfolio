@@ -1,7 +1,6 @@
 .project-detail {
   background: var(--color-cream);
   color: var(--color-ink);
-  margin-top: 8rem;
 }
 
 .project-detail-header {
@@ -71,49 +70,51 @@
   gap: 100px;
 }
 
-/* --- sectie: koptitel + losse paragraaf-rijen --- */
 .detail-section {
   max-width: 100%;
   scroll-margin-top: 8rem;
 }
 
+.detail-section-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.detail-section-layout.has-image {
+  flex-direction: row;
+  align-items: center;
+  gap: 56px;
+}
+
+.detail-section-text {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.detail-section-image {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.detail-section-image-media {
+  width: 100%;
+  height: auto;
+  border-radius: 2px;
+  display: block;
+}
+
 .section-heading {
   color: var(--color-coral);
-  margin-bottom: 20px;
-}
-
-/* --- paragraaf-rij: zonder foto = volledige breedte, met foto = naast elkaar --- */
-.paragraph-row {
-  display: block;
-  margin-bottom: 32px;
-}
-
-.paragraph-row:last-child {
   margin-bottom: 0;
 }
 
-.paragraph-row.has-image {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 56px;
-  align-items: center;
-}
-
-.paragraph-row.reverse {
-  direction: rtl;
-}
-.paragraph-row.reverse > * {
-  direction: ltr;
-}
-
-.paragraph-row p {
+.detail-section-text p {
   color: var(--color-ink);
-}
-
-.paragraph-image {
-  width: auto;
-  height: 100%;
-  border-radius: 2px;
+  margin: 0;
 }
 
 .tech-list {
@@ -128,4 +129,11 @@
   padding: 7px 16px;
   border: 1px solid var(--color-lilac);
   border-radius: 100px;
+}
+
+@media (max-width: 900px) {
+  .detail-section-layout.has-image {
+    flex-direction: column;
+    align-items: stretch;
+  }
 }

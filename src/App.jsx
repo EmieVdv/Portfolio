@@ -1,5 +1,7 @@
 import './App.css'
+import { useEffect } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Navbar from './components/Navbar/Navbar.jsx'
 import Hero from './components/Hero/Hero.jsx'
 import SectionTitle from './components/SectionTitle/SectionTitle.jsx'
@@ -12,6 +14,24 @@ import ProjectPage from './pages/ProjectPage.jsx';
 
 function HomePage() {
   useSectionSnap();
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const shouldScrollToProjects =
+      location.hash === '#projects' || location.state?.scrollTo === 'projects';
+
+    if (!shouldScrollToProjects) return;
+
+    window.requestAnimationFrame(() => {
+      const projectsSection = document.getElementById('projects');
+      projectsSection?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    if (location.state?.scrollTo === 'projects') {
+      navigate(location.pathname, { replace: true, state: null });
+    }
+  }, [location, navigate]);
 
   return (
     <>

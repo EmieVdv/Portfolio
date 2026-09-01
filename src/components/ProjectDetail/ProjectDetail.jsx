@@ -14,7 +14,6 @@ const SECTIONS = [
 export default function ProjectDetail({ category = '', title = '', content = [] }) {
   const [activeId, setActiveId] = useState(SECTIONS[0].id);
   const sectionRefs = useRef({});
-  const headingRefs = useRef({});
 
   const handleIndexClick = (event, sectionId) => {
     event.preventDefault();
@@ -27,25 +26,42 @@ export default function ProjectDetail({ category = '', title = '', content = [] 
   };
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visibleEntries = entries.filter((entry) => entry.isIntersecting);
+    let rafId = 0;
 
-        if (visibleEntries.length === 0) return;
+    const updateActiveSection = () => {
+      rafId = 0;
 
-        const topEntry = visibleEntries.reduce((current, entry) => {
-          if (!current) return entry;
-          return entry.boundingClientRect.top < current.boundingClientRect.top ? entry : current;
-        }, null);
+      const offset = 180;
+      const sections = content
+        .map((section) => ({ id: section.id, element: sectionRefs.current[section.id] }))
+        .filter(({ element }) => element);
 
-        if (topEntry) setActiveId(topEntry.target.dataset.sectionId || topEntry.target.id);
-      },
-      { rootMargin: '-128px 0px -70% 0px', threshold: 0 }
-    );
+      let currentId = sections[0]?.id || SECTIONS[0].id;
 
-    Object.values(headingRefs.current).forEach((el) => el && observer.observe(el));
-    return () => observer.disconnect();
-  }, []);
+      for (const { id, element } of sections) {
+        if (element.getBoundingClientRect().top <= offset) {
+          currentId = id;
+        }
+      }
+
+      setActiveId(currentId);
+    };
+
+    const handleScroll = () => {
+      if (rafId) return;
+      rafId = window.requestAnimationFrame(updateActiveSection);
+    };
+
+    updateActiveSection();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll);
+
+    return () => {
+      if (rafId) window.cancelAnimationFrame(rafId);
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+    };
+  }, [content]);
 
   return (
     <div className="project-detail">
@@ -76,42 +92,46 @@ export default function ProjectDetail({ category = '', title = '', content = [] 
         </div>
 
         <div className="content-col">
-          {content.map((section) => (
-            <section
-              key={section.id}
-              id={section.id}
-              ref={(el) => (sectionRefs.current[section.id] = el)}
-              className="detail-section"
-            >
-              <h3
-                data-section-id={section.id}
-                ref={(el) => (headingRefs.current[section.id] = el)}
-                className="text-h3 section-heading"
+          {content.map((section) => {
+            const image = section.paragraphs.find((paragraph) => paragraph.image)?.image;
+
+            return (
+              <section
+                key={section.id}
+                id={section.id}
+                ref={(el) => (sectionRefs.current[section.id] = el)}
+                className="detail-section"
               >
-                {section.heading}
-              </h3>
+                <div className={`detail-section-layout ${image ? 'has-image' : ''}`}>
+                  <div className="detail-section-text">
+                    <h3 className="text-h3 section-heading">{section.heading}</h3>
 
-              {section.paragraphs.map((p, j) => (
-                <div
-                  key={j}
-                  className={`paragraph-row ${p.image ? 'has-image' : ''} ${
-                    j % 2 === 1 ? 'reverse' : ''
-                  }`}
-                >
-                  <p className="text-paragraph">{p.text}</p>
-                  {p.image && <img src={p.image} alt="" className="paragraph-image" />}
-                </div>
-              ))}
+                    {section.paragraphs.map((paragraph, paragraphIndex) => (
+                      <p key={paragraphIndex} className="text-paragraph">
+                        {paragraph.text}
+                      </p>
+                    ))}
+                  </div>
 
-              {section.techs && (
-                <div className="tech-list">
-                  {section.techs.map((t) => (
-                    <span className="tech-pill text-nav" key={t}>{t}</span>
-                  ))}
+                  {image && (
+                    <div className="detail-section-image">
+                      <img src={image} alt="" className="detail-section-image-media" />
+                    </div>
+                  )}
                 </div>
-              )}
-            </section>
-          ))}
+
+                {section.techs && (
+                  <div className="tech-list">
+                    {section.techs.map((t) => (
+                      <span className="tech-pill text-nav" key={t}>
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </section>
+            );
+          })}
         </div>
       </div>
     </div>

@@ -121,7 +121,7 @@ p, h1, h2, h3, h4, h5, h6 {
   font-size: clamp(16px, 1.5vw, 20px);
   line-height: 150%;
   text-transform: uppercase;
-  letter-spacing: 0.04em; /* iets extra spacing, past mooi bij hoofdletters */
+  letter-spacing: 0.04em;
   font-weight: 400;
 }
 

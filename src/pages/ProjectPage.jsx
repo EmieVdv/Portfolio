@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
+import { useLenis } from 'lenis/react';
 import Navbar from '../components/Navbar/Navbar.jsx';
 import ProjectDetail from '../components/ProjectDetail/ProjectDetail.jsx';
 import Footer from '../components/Footer/Footer.jsx';
@@ -7,11 +8,20 @@ import { projects } from '../data/projects.js';
 
 export default function ProjectPage() {
   const { slug } = useParams();
+  const lenis = useLenis();
   const project = projects.find((entry) => entry.slug === slug);
 
   useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
-  }, [slug]);
+    const resetToTop = () => {
+      lenis?.scrollTo(0, { immediate: true, force: true });
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+    };
+
+    resetToTop();
+    const frameId = window.requestAnimationFrame(resetToTop);
+
+    return () => window.cancelAnimationFrame(frameId);
+  }, [slug, lenis]);
 
   if (!project) {
     return <Navigate to="/" replace />;

@@ -27,12 +27,6 @@
   margin: 0;
 }
 
-.hero-subtitle {
-  color: transparent;
-  -webkit-text-stroke: 1.5px var(--color-ink);
-  margin: 0 0 4rem;
-}
-
 .hero-subtitle-image {
   width: clamp(280px, 45vw, 760px);
   height: auto;

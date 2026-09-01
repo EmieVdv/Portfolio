@@ -4,8 +4,6 @@ function paragraph(text, image) {
 }
 
 function createProjectDetail({
-  title,
-  category,
   intro,
   research,
   design,
@@ -58,7 +56,6 @@ function createProjectDetail({
         techs,
       },
     ],
-    techs,
   };
 }
 
@@ -68,21 +65,12 @@ export const projects = [
     index: "01",
     category: "Internet of Things",
     title: "Beestige Tijdreizigers",
-    images: [
-      { src: "/images/bt-1.jpeg", top: "60%", left: "5%", width: "32%" },
-      { src: "/images/bt-2.png", top: "20%", left: "60%", width: "22%" },
-      { src: "/images/bt-3.jpeg", top: "20%", left: "10%", width: "29%" },
-      { src: "/images/bt-4.png", top: "62%", left: "55%", width: "22%" },
-      { src: "/images/bt-5.jpeg", top: "57%", left: "90%", width: "14%" },
-    ],
     previewImages: [
       { src: "/images/bt-3.jpeg" },
       { src: "/images/bt-1.jpeg" },
       { src: "/images/bt-2.png" },
     ],
     detail: createProjectDetail({
-      title: "Beestige Tijdreizigers",
-      category: "Internet of Things",
       intro:
         "Beestige Tijdreizigers is an interactive museum installation developed as part of the Digital Product Studio 1 course in collaboration with the Huis van Kina museum in Ghent. Working in a team of four, we designed and built an educational experience that combines physical interaction, electronics, and software to teach children about prehistoric animals through play. Visitors select two animals using physical cards and watch them race based on their real-world speeds, creating a fun and engaging way to learn about natural history.",
       research:
@@ -107,21 +95,12 @@ export const projects = [
     index: "02",
     category: "Unreal Engine",
     title: "Flipverse",
-    images: [
-      { src: "/images/flipverse-1.png", top: "60%", left: "5%", width: "28%" },
-      { src: "/images/flipverse-2.png", top: "20%", left: "60%", width: "28%" },
-      { src: "/images/flipverse-3.png", top: "20%", left: "10%", width: "29%" },
-      { src: "/images/flipverse-4.png", top: "62%", left: "50%", width: "28%" },
-      { src: "/images/flipverse-5.png", top: "50%", left: "85%", width: "16%" },
-    ],
     previewImages: [
       { src: "/images/flipverse-1.png" },
       { src: "/images/flipverse-2.png" },
       { src: "/images/flipverse-3.png" },
     ],
     detail: createProjectDetail({
-      title: "Flipverse",
-      category: "Unreal Engine",
       intro:
         "Flipverse explores a stylized environment built to show how motion, composition, and game-engine tools can create a strong mood.",
       research:
@@ -134,7 +113,11 @@ export const projects = [
       reflection:
         "The project reinforced how much atmosphere depends on pacing, lighting, and a disciplined asset selection.",
       techs: ["Unreal Engine", "Blueprints", "3D Modeling", "Lighting"],
-      media: "/images/flipverse-1.png",
+      media: [
+        "/images/flipverse-1.png", 
+        "/images/flipverse-2.png",  
+        "/images/flipverse-3.png",  
+      ],
     }),
   },
   {
@@ -142,21 +125,12 @@ export const projects = [
     index: "03",
     category: "React three fiber",
     title: "The Empyrean",
-    images: [
-      { src: "/images/emp-1.jpg", top: "60%", left: "5%", width: "28%" },
-      { src: "/images/emp-3.jpg", top: "20%", left: "60%", width: "30%" },
-      { src: "/images/emp-2.jpg", top: "20%", left: "10%", width: "28%" },
-      { src: "/images/emp-4.jpg", top: "62%", left: "50%", width: "28%" },
-      { src: "/images/emp-5.png", top: "50%", left: "85%", width: "20%" },
-    ],
     previewImages: [
       { src: "/images/emp-2.jpg" },
       { src: "/images/emp-5.png" },
       { src: "/images/emp-4.jpg" },
     ],
     detail: createProjectDetail({
-      title: "The Empyrean",
-      category: "React three fiber",
       intro:
         "The Empyrean combines WebGL, motion, and interface design to create a space that feels lightweight but still visually immersive.",
       research:
@@ -169,7 +143,11 @@ export const projects = [
       reflection:
         "The biggest takeaway was how important it is to balance visual ambition with performance and clarity.",
       techs: ["React", "React Three Fiber", "Three.js", "GLSL"],
-      media: "/images/emp-2.jpg",
+      media: [
+        "/images/emp-1.jpg", 
+        "/images/emp-2.jpg",  
+        "/images/emp-3.jpg",  
+      ],
     }),
   },
 ];
