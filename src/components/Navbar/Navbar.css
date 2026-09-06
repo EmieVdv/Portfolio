@@ -34,6 +34,7 @@
   color: inherit;
   letter-spacing: -0.02em;
   font-style: italic;
+  text-decoration: none;
 }
 .navbar-cv {
   color: inherit;
@@ -67,4 +68,136 @@ ul.navbar-links {
 .navbar-links a:hover {
   color: var(--color-coral);
   transition: color 0.25s ease;
+}
+
+.navbar-menu-toggle,
+.navbar-menu-close,
+.navbar-menu-dismiss {
+  display: none;
+}
+
+.navbar-menu {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 1.5rem;
+  }
+
+  .navbar > * {
+    flex: 0 0 auto;
+  }
+
+  .navbar-cv,
+  ul.navbar-links {
+    display: none;
+  }
+
+  .navbar-menu-toggle {
+    display: flex;
+    width: 2rem;
+    height: 2rem;
+    padding: 0.35rem 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+  }
+
+  .navbar-menu-toggle-icon {
+    width: 100%;
+    height: 100%;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+  }
+
+  .navbar-menu-toggle-icon path {
+    vector-effect: non-scaling-stroke;
+  }
+
+  .navbar-menu {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    background: var(--color-purple);
+    color: var(--color-cream);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-1rem);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+
+  .navbar-menu--open {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  .navbar-menu-close {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    display: block;
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--color-cream);
+    cursor: pointer;
+  }
+
+  .navbar-menu-close span {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: currentColor;
+  }
+
+  .navbar-menu-close span:first-child {
+    transform: rotate(45deg);
+  }
+
+  .navbar-menu-close span:last-child {
+    transform: rotate(-45deg);
+  }
+
+  .navbar-menu-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 8rem 1.5rem 2rem;
+  }
+
+  .navbar-menu-content a {
+    color: var(--color-cream);
+    text-decoration: none;
+  }
+
+  .navbar-menu-content a:hover {
+    color: var(--color-coral);
+  }
+
+  .navbar-menu-content .navbar-cv {
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  .navbar-menu-dismiss {
+    display: block;
+    flex: 1;
+    width: 100%;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+  }
 }

@@ -62,3 +62,38 @@
   display: block;
   pointer-events: none;
 }
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 6rem 1.5rem 4rem;
+  }
+
+  .hero-title-container {
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+  }
+
+  .hero-subtitle-image {
+    width: clamp(220px, 78vw, 560px);
+  }
+
+  .hero-bio {
+    max-width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.25rem;
+  }
+
+  .hero-photo {
+    height: 10rem;
+    margin-top: 2rem;
+  }
+
+  .hero-bio-text {
+    text-align: left;
+  }
+
+  .hero-wave {
+    height: 96px;
+  }
+}

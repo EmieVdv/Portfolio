@@ -33,6 +33,25 @@ function buildWavePath({ peaks, width, height, baseline, amplitude, minCover = 8
   return d;
 }
 
+function BackToTopButton({ onClick, className = "" }) {
+  return (
+    <button className={`footer-back-to-top text-nav ${className}`} onClick={onClick}>
+      Back to top
+      <span className="footer-back-to-top-circle">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+          <path
+            d="M6 10V2M6 2L2.5 5.5M6 2L9.5 5.5"
+            stroke="currentColor"
+            strokeWidth="1.3"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </span>
+    </button>
+  );
+}
+
 export default function Footer() {
   const footerRef = useRef(null);
   const bottomWaveSvgRef = useRef(null);
@@ -130,20 +149,7 @@ export default function Footer() {
             I'm excited to hear from you!
           </p>
 
-          <button className="footer-back-to-top text-nav" onClick={scrollToTop}>
-            Back to top
-            <span className="footer-back-to-top-circle">
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                <path
-                  d="M6 10V2M6 2L2.5 5.5M6 2L9.5 5.5"
-                  stroke="currentColor"
-                  strokeWidth="1.3"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </span>
-          </button>
+          <BackToTopButton onClick={scrollToTop} />
         </div>
 
         <div className="footer-contact">
@@ -177,6 +183,11 @@ export default function Footer() {
           </svg>
 
         </a>
+
+        <BackToTopButton
+          className="footer-back-to-top--mobile"
+          onClick={scrollToTop}
+        />
       </div>
 
       <svg

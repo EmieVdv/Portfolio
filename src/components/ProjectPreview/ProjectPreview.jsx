@@ -47,7 +47,7 @@ function buildWavePath({ peaks, width, height, baseline, amplitude, direction, e
   return d;
 }
 
-export default function ProjectPreview({ index, category, title, previewImages, slug }) {
+export default function ProjectPreview({ index, category, title, description, previewImages, slug }) {
   const collageRef = useRef(null);
   const bottomPathRef = useRef(null);
   const topPathRef = useRef(null);
@@ -61,6 +61,7 @@ export default function ProjectPreview({ index, category, title, previewImages, 
 
   const [ratios, setRatios] = useState({});      // per index: naturalWidth/naturalHeight
   const [rowHeight, setRowHeight] = useState(0);  // berekende gedeelde hoogte in px
+  const [activeIndex, setActiveIndex] = useState(0);
   const gap = 8;
 
   function handleImageLoad(i, e) {
@@ -76,6 +77,31 @@ export default function ProjectPreview({ index, category, title, previewImages, 
     bottomPeaks.current = randomPeaks(2 + Math.round(Math.random()));
     topPeaks.current = randomPeaks(2 + Math.round(Math.random()));
   }, []);
+
+  useEffect(() => {
+    const el = collageRef.current?.querySelector('.collage-photos');
+    if (!el) return undefined;
+
+    function updateActiveIndex() {
+      const targetPosition = el.scrollLeft + 20;
+      let closestIndex = 0;
+      let closestDistance = Infinity;
+
+      Array.from(el.children).forEach((photo, index) => {
+        const distance = Math.abs(photo.offsetLeft - targetPosition);
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          closestIndex = index;
+        }
+      });
+
+      setActiveIndex(closestIndex);
+    }
+
+    updateActiveIndex();
+    el.addEventListener('scroll', updateActiveIndex, { passive: true });
+    return () => el.removeEventListener('scroll', updateActiveIndex);
+  }, [previewImages]);
 
   // herbereken de rij-hoogte zodra we alle verhoudingen kennen, of bij resize
   useEffect(() => {
@@ -166,6 +192,7 @@ export default function ProjectPreview({ index, category, title, previewImages, 
         <Link to={`/projecten/${slug}`} className="project-preview-title text-h2">
           {title}
         </Link>
+        <p className="project-preview-description text-paragraph">{description}</p>
       </div>
 
       <div className="project-preview-collage" ref={collageRef}>
@@ -180,6 +207,21 @@ export default function ProjectPreview({ index, category, title, previewImages, 
               onLoad={(e) => handleImageLoad(i, e)}
               onMouseEnter={handlePhotoEnter}
               onMouseLeave={handlePhotoLeave}
+            />
+          ))}
+        </div>
+
+        <div className="collage-indicators" aria-label="Project preview images">
+          {previewImages.map((_, i) => (
+            <button
+              key={i}
+              type="button"
+              className={i === activeIndex ? 'collage-indicator collage-indicator--active' : 'collage-indicator'}
+              aria-label={`Show preview image ${i + 1}`}
+              onClick={() => {
+                const photos = collageRef.current?.querySelector('.collage-photos');
+                photos?.children[i]?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+              }}
             />
           ))}
         </div>

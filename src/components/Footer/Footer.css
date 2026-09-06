@@ -66,6 +66,10 @@
   background: var(--color-coral);
 }
 
+.footer-back-to-top--mobile {
+  display: none;
+}
+
 
 .footer-back-to-top-circle {
   width: 28px;
@@ -127,4 +131,38 @@
 
 .footer-linkedin:hover .footer-linkedin-icon {
   color: var(--color-coral);
+}
+
+@media (max-width: 768px) {
+  .footer-content {
+    gap: 5rem;
+  }
+
+  .footer-top-row .footer-back-to-top {
+    display: none;
+  }
+
+  .footer-top-row,
+  .footer-contact,
+  .footer-linkedin,
+  .footer-back-to-top--mobile {
+    order: 1;
+  }
+
+  .footer-contact {
+    order: 2;
+  }
+
+  .footer-linkedin {
+    order: 3;
+  }
+
+  .footer-back-to-top--mobile {
+    display: flex;
+    order: 4;
+    position: absolute;
+    bottom: 7rem;
+    left: 6vw;
+    z-index: 1;
+  }
 }
