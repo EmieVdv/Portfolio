@@ -10,7 +10,7 @@ import 'lenis/dist/lenis.css';
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
-      <ReactLenis root options={{ duration: 1.6, smoothWheel: true }}>
+      <ReactLenis root options={{ duration: 1.2, smoothWheel: true }}>
         <App />
       </ReactLenis>
     </BrowserRouter>
