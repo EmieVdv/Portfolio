@@ -117,12 +117,15 @@
     position: static;
     height: clamp(150px, 30vh, 220px);
     overflow-x: auto;
+    overflow-y: hidden;
     justify-content: flex-start;
     gap: 10px;
     padding: 0 6vw;
     scroll-padding-left: 6vw;
     opacity: 1 !important;
     scroll-snap-type: x mandatory;
+    touch-action: pan-x;
+    overscroll-behavior-y: none;
     scrollbar-width: none;
   }
 

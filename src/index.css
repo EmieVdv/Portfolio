@@ -49,6 +49,27 @@ body {
   -ms-overflow-style: none;
 }
 
+body.page-home,
+body.page-detail {
+  background: linear-gradient(
+    to bottom,
+    var(--page-top-color) 0,
+    var(--page-top-color) 100px,
+    var(--color-purple) 100px,
+    var(--color-purple) calc(100% - 100px),
+    var(--color-lilac) calc(100% - 100px),
+    var(--color-lilac) 100%
+  );
+}
+
+body.page-home {
+  --page-top-color: var(--color-cream);
+}
+
+body.page-detail {
+  --page-top-color: var(--color-ink);
+}
+
 body::-webkit-scrollbar {
   width: 0;
   height: 0;

@@ -50,6 +50,16 @@ function HomePage() {
 }
 
 function App() {
+  const location = useLocation();
+
+  useEffect(() => {
+    const pageClass = location.pathname === "/" ? "page-home" : "page-detail";
+    document.body.classList.remove("page-home", "page-detail");
+    document.body.classList.add(pageClass);
+
+    return () => document.body.classList.remove(pageClass);
+  }, [location.pathname]);
+
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
