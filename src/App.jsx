@@ -53,11 +53,8 @@ function App() {
   const location = useLocation();
 
   useEffect(() => {
-    const pageClass = location.pathname === "/" ? "page-home" : "page-detail";
-    document.body.classList.remove("page-home", "page-detail");
-    document.body.classList.add(pageClass);
-
-    return () => document.body.classList.remove(pageClass);
+    document.body.classList.toggle('route-detail', location.pathname !== '/');
+    return () => document.body.classList.remove('route-detail');
   }, [location.pathname]);
 
   return (

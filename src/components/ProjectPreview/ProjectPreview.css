@@ -103,7 +103,8 @@
   }
 
   .project-preview-collage {
-    flex: 1 1 auto;
+    flex: 0 0 calc(clamp(150px, 30vh, 220px) + 14px + 3px);
+    height: calc(clamp(150px, 30vh, 220px) + 14px + 3px);
     min-height: 0;
     margin-top: clamp(1.5rem, 5vh, 3rem);
     display: flex;
@@ -116,6 +117,7 @@
   .collage-photos {
     position: static;
     height: clamp(150px, 30vh, 220px);
+    flex: 0 0 clamp(150px, 30vh, 220px);
     overflow-x: auto;
     overflow-y: hidden;
     justify-content: flex-start;

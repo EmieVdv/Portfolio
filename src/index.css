@@ -26,6 +26,7 @@
 */
 html {
   height: 100%;
+  background: var(--color-lilac);
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
@@ -44,30 +45,14 @@ body {
   min-height: 100%;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
-  background: var(--color-purple);
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-body.page-home,
-body.page-detail {
   background: linear-gradient(
     to bottom,
-    var(--page-top-color) 0,
-    var(--page-top-color) 100px,
-    var(--color-purple) 100px,
-    var(--color-purple) calc(100% - 100px),
-    var(--color-lilac) calc(100% - 100px),
+    var(--color-cream) 0%,
+    var(--color-cream) calc(100% - 100px),
     var(--color-lilac) 100%
   );
-}
-
-body.page-home {
-  --page-top-color: var(--color-cream);
-}
-
-body.page-detail {
-  --page-top-color: var(--color-ink);
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 body::-webkit-scrollbar {
@@ -191,4 +176,13 @@ p, h1, h2, h3, h4, h5, h6 {
   to {
     opacity: 1;
   }
+}
+
+body.route-detail {
+  background: linear-gradient(
+    to bottom,
+    var(--color-purple) 0%,
+    var(--color-purple) calc(100% - 100px),
+    var(--color-lilac) 100%
+  );
 }
