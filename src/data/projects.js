@@ -6,7 +6,7 @@ export const projects = [
     index: "01",
     category: "Internet of Things",
     title: "Beestige Tijdreizigers",
-    description: "An interactive museum installation where children discover prehistoric animals through play, physical controls, and a digital race.",
+    description: "An interactive museum installation where children discover prehistoric animals through a playful and engaging race.",
     previewImages: [
       { src: "/images/bt/full.jpeg" },
       { src: "/images/bt/full_back.jpeg" },
@@ -65,7 +65,7 @@ export const projects = [
           heading: "Reflection",
           paragraphs: [
             {
-              text: "This project taught me how to bridge digital interfaces with physical computing, and strengthened my skills in prototyping, usability testing, and designing experiences that are both educational and engaging.",
+              text: "This project taught me how to bridge digital interfaces with physical computing, and strengthened my skills in prototyping, usability testing, and designing experiences that are both educational and engaging. I also learned a lot about working in a team, where every member had their own strengths and responsibilities. I learned how to effectively communicate and collaborate to bring a complex project to life.",
             },
           ],
         },
