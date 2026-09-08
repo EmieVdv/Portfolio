@@ -6,11 +6,13 @@ import "./Navbar.css";
 export default function Navbar() {
   const [isDarkBackground, setIsDarkBackground] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isCvMenuOpen, setIsCvMenuOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const isHome = location.pathname === "/";
 
   const closeMenu = () => setIsMenuOpen(false);
+  const closeCvMenu = () => setIsCvMenuOpen(false);
 
   const handleProjectsClick = (event) => {
     event.preventDefault();
@@ -26,6 +28,11 @@ export default function Navbar() {
   };
 
   const handleMenuLinkClick = () => {
+    closeMenu();
+  };
+
+  const handleCvDownload = () => {
+    closeCvMenu();
     closeMenu();
   };
 
@@ -94,28 +101,26 @@ export default function Navbar() {
         </a>
       </div>
 
-      <a
-        className="navbar-cv text-nav"
-        href="/cv-emie-van-de-veire.pdf"
-        download
-      >
-        Download CV
-        <svg
-          className="navbar-cv-icon"
-          width="11"
-          height="11"
-          viewBox="0 0 12 12"
-          fill="none"
+      <div className={`navbar-cv${isCvMenuOpen ? " navbar-cv--open" : ""}`}>
+        <button
+          className="navbar-cv-trigger text-nav"
+          type="button"
+          aria-expanded={isCvMenuOpen}
+          aria-haspopup="menu"
+          onClick={() => setIsCvMenuOpen((isOpen) => !isOpen)}
         >
-          <path
-            d="M6 1V8.5M6 8.5L2.8 5.3M6 8.5L9.2 5.3M1.5 11H10.5"
-            stroke="currentColor"
-            strokeWidth="1.2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </a>
+          Download CV
+          <span className="navbar-cv-chevron" aria-hidden="true" />
+        </button>
+        <div className="navbar-cv-options" role="menu">
+          <a href="/cv_emie_english.pdf" download role="menuitem" onClick={handleCvDownload}>
+            English version
+          </a>
+          <a href="/cv_emie_nederlands.pdf" download role="menuitem" onClick={handleCvDownload}>
+            Dutch version
+          </a>
+        </div>
+      </div>
 
       <ul className="navbar-links">
         <li>
@@ -165,29 +170,26 @@ export default function Navbar() {
           <a className="text-nav" href="#contact" onClick={handleMenuLinkClick}>
             Contact
           </a>
-          <a
-            className="navbar-cv text-nav"
-            href="/cv-emie-van-de-veire.pdf"
-            download
-            onClick={handleMenuLinkClick}
-          >
-            Download CV
-            <svg
-              className="navbar-cv-icon"
-              width="11"
-              height="11"
-              viewBox="0 0 12 12"
-              fill="none"
+          <div className={`navbar-cv${isCvMenuOpen ? " navbar-cv--open" : ""}`}>
+            <button
+              className="navbar-cv-trigger text-nav"
+              type="button"
+              aria-expanded={isCvMenuOpen}
+              aria-haspopup="menu"
+              onClick={() => setIsCvMenuOpen((isOpen) => !isOpen)}
             >
-              <path
-                d="M6 1V8.5M6 8.5L2.8 5.3M6 8.5L9.2 5.3M1.5 11H10.5"
-                stroke="currentColor"
-                strokeWidth="1.2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </a>
+              Download CV
+              <span className="navbar-cv-chevron" aria-hidden="true" />
+            </button>
+            <div className="navbar-cv-options" role="menu">
+              <a href="/cv_emie_english.pdf" download role="menuitem" onClick={handleCvDownload}>
+                English version
+              </a>
+              <a href="/cv_emie_nederlands.pdf" download role="menuitem" onClick={handleCvDownload}>
+                Dutch version
+              </a>
+            </div>
+          </div>
         </div>
         <button className="navbar-menu-dismiss" type="button" aria-label="Close menu" onClick={closeMenu} />
       </div>
